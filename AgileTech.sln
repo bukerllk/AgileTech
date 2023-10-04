@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileTech_API", "AgileTech_API\AgileTech_API.csproj", "{34500236-B1B4-4A1C-94DF-85E2A1C180FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{34500236-B1B4-4A1C-94DF-85E2A1C180FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34500236-B1B4-4A1C-94DF-85E2A1C180FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34500236-B1B4-4A1C-94DF-85E2A1C180FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34500236-B1B4-4A1C-94DF-85E2A1C180FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE4EFBB5-B308-49C1-8705-E6D782241F23}
+	EndGlobalSection
+EndGlobal

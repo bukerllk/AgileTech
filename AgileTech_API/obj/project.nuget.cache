@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "wkzE5/rSLp2LvvP0OqKNf2g9l5rzb/s1500dhYXCnMbaH7FRfO08Wif8f6KXIqEtlqMCZo4XqB49fLwhaYi6XQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_API\\AgileTech_API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\GEM\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.11\\microsoft.aspnetcore.openapi.7.0.11.nupkg.sha512",
+    "C:\\Users\\GEM\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\GEM\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\GEM\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "C:\\Users\\GEM\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "C:\\Users\\GEM\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "C:\\Users\\GEM\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
