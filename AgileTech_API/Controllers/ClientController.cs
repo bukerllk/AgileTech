@@ -4,6 +4,7 @@ using AgileTech_API.Models.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AgileTech_API.Controllers
 {
@@ -12,9 +13,12 @@ namespace AgileTech_API.Controllers
     public class ClientController : ControllerBase
     {
         private readonly ILogger<ClientController> _logger;
-        public ClientController(ILogger<ClientController> logger)
+        private readonly ApplicatioDbContext _db;
+        public ClientController(ILogger<ClientController> logger, ApplicatioDbContext db)
         {
-            _logger = logger; 
+            _logger = logger;
+            _db = db;
+
         }
 
         [HttpGet]
@@ -22,7 +26,7 @@ namespace AgileTech_API.Controllers
         public ActionResult<IEnumerable<ClientDto>> GetClients()
         {
             _logger.LogInformation("Get clients list");
-            return Ok(ClientStore.clientList);
+            return Ok(_db.Clients.ToList());
         }
 
         [HttpGet("id:int", Name = "GetClientById")]
@@ -37,7 +41,8 @@ namespace AgileTech_API.Controllers
                 return BadRequest();
             }
 
-            var client = ClientStore.clientList.FirstOrDefault(c => c.Id == id);
+            //var client = ClientStore.clientList.FirstOrDefault(c => c.Id == id);
+            var client = _db.Clients.FirstOrDefault(c => c.Id == id);
 
             if (client == null)
             {
@@ -58,13 +63,13 @@ namespace AgileTech_API.Controllers
                 return BadRequest(clientDto);
             }
 
-            if (ClientStore.clientList.FirstOrDefault(c => c.Email.ToLower() == clientDto.Email.ToLower()) != null)
+            if (_db.Clients.FirstOrDefault(c => c.Email.ToLower() == clientDto.Email.ToLower()) != null)
             {
                 ModelState.AddModelError("EmailExists", "The email " + clientDto.Email + " already exists.");
                 return BadRequest(ModelState);
             }
 
-            if (!ClientStore.clientList.Any()) {
+            if (!_db.Clients.Any()) {
                 return BadRequest(clientDto);
             }
 
@@ -78,8 +83,15 @@ namespace AgileTech_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
-            clientDto.Id = ClientStore.clientList.OrderByDescending(c => c.Id).FirstOrDefault().Id + 1;
-            ClientStore.clientList.Add(clientDto);
+            Client model = new()
+            {
+                Name = clientDto.Name,
+                Email = clientDto.Email,
+                Created = DateTime.Now
+            };
+
+            _db.Clients.Add(model);
+            _db.SaveChanges();
 
             return CreatedAtRoute("GetClientById", new { id = clientDto.Id }, clientDto);
         }
@@ -95,14 +107,15 @@ namespace AgileTech_API.Controllers
                 return BadRequest();
             }
 
-            var client = ClientStore.clientList.FirstOrDefault(c => c.Id == id);
+            var client = _db.Clients.FirstOrDefault(c => c.Id == id);
 
             if (client == null) 
             {
                 return NotFound();
             }
 
-            ClientStore.clientList.Remove(client);
+            _db.Clients.Remove(client);
+            _db.SaveChanges();
 
             return NoContent();
 
@@ -120,16 +133,17 @@ namespace AgileTech_API.Controllers
                 return BadRequest();
             }
 
-            var client = ClientStore.clientList.FirstOrDefault(c => c.Id == id);
-
-            if (client == null)
+            Client model = new()
             {
-                return NotFound();
-            }
+                Id = clientDto.Id,
+                Name = clientDto.Name,
+                Email = clientDto.Email,
+                Created = DateTime.Now
+            };
 
-            client.Name = clientDto.Name;
-            client.Email = clientDto.Email;
-  
+            _db.Clients.Update(model);
+            _db.SaveChanges();
+
             return NoContent();
         }
 
@@ -144,19 +158,34 @@ namespace AgileTech_API.Controllers
                 return BadRequest();
             }
 
-            var client = ClientStore.clientList.FirstOrDefault(c => c.Id == id);
+            var client = _db.Clients.AsNoTracking().FirstOrDefault (c => c.Id == id);
 
-            if (client == null)
+            if (client == null) return NotFound();
+
+            ClientDto clientDto = new()
             {
-                return NotFound();
-            }
+                Id = client.Id,
+                Name = client.Name,
+                Email = client.Email
+            };
 
-            patchDto.ApplyTo(client, ModelState);
+            patchDto.ApplyTo(clientDto, ModelState);
 
             if (!ModelState.IsValid) 
             {
                 return BadRequest(ModelState);
             }
+
+            Client model = new()
+            {
+                Id = clientDto.Id,
+                Name = clientDto.Name,
+                Email = clientDto.Email,
+                Created = DateTime.Now
+            };
+
+            _db.Clients.Update(model);
+            _db.SaveChanges();
 
             return NoContent();
         }
