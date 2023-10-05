@@ -31,3 +31,7 @@ C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_API\obj\Debug\net7.0\refint\Agil
 C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_API\obj\Debug\net7.0\AgileTech_API.pdb
 C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_API\obj\Debug\net7.0\AgileTech_API.genruntimeconfig.cache
 C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_API\obj\Debug\net7.0\ref\AgileTech_API.dll
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_API\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_API\bin\Debug\net7.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_API\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_API\bin\Debug\net7.0\Newtonsoft.Json.Bson.dll
