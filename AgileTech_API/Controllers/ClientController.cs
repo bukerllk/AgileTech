@@ -11,14 +11,58 @@ namespace AgileTech_API.Controllers
     public class ClientController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<ClientDto> GetClients()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<IEnumerable<ClientDto>> GetClients()
         {
-            return ClientStore.clientList;
-            /*return new List<ClientDto> {
-                new ClientDto{Id=1, Name="Eduard Russy", Email="eduardrussy@gmail.com"},
-                new ClientDto{Id=2, Name="Juan Russy", Email="juan@gmail.com"},
-                new ClientDto{Id=3, Name="Dilan Russy", Email="dilan@gmail.com"}
-            };*/
+            return Ok(ClientStore.clientList);
         }
+
+        [HttpGet("id:int", Name = "GetClientById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<ClientDto> GetClientById(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var client = ClientStore.clientList.FirstOrDefault(c => c.Id == id);
+
+            if (client == null)
+            {
+                return NotFound();
+            }
+            return Ok(client);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<ClientDto> CreateClient([FromBody] ClientDto clientDto) 
+        {
+            if (!ClientStore.clientList.Any()) { 
+                return BadRequest();
+            }
+
+            if (clientDto == null)
+            {
+                return BadRequest(clientDto);
+            }
+
+            if (clientDto.Id > 0)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
+
+            clientDto.Id = ClientStore.clientList.OrderByDescending(c => c.Id).FirstOrDefault().Id + 1;
+            ClientStore.clientList.Add(clientDto);
+
+            return CreatedAtRoute("GetClientById", new { id = clientDto.Id }, clientDto);
+        }
+        
+
     }
 }
