@@ -16,7 +16,7 @@ namespace AgileTech_API.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        
+
         public DateTime Created { get; set; }
     }
 }

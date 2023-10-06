@@ -1,6 +1,7 @@
 ﻿using AgileTech_API.Data;
 using AgileTech_API.Models;
 using AgileTech_API.Models.Dto;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -14,26 +15,29 @@ namespace AgileTech_API.Controllers
     {
         private readonly ILogger<ClientController> _logger;
         private readonly ApplicatioDbContext _db;
-        public ClientController(ILogger<ClientController> logger, ApplicatioDbContext db)
+        private readonly IMapper _mapper;
+        public ClientController(ILogger<ClientController> logger, ApplicatioDbContext db, IMapper mapper)
         {
             _logger = logger;
             _db = db;
+            _mapper = mapper;
 
         }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<ClientDto>> GetClients()
+        public async Task<ActionResult<IEnumerable<ClientDto>>> GetClients()
         {
             _logger.LogInformation("Get clients list");
-            return Ok(_db.Clients.ToList());
+            IEnumerable<Client> clientList = await _db.Clients.ToListAsync();
+            return Ok(_mapper.Map<IEnumerable<Client>>(clientList));
         }
 
         [HttpGet("id:int", Name = "GetClientById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<ClientDto> GetClientById(int id)
+        public async Task<ActionResult<ClientDto>> GetClientById(int id)
         {
             if (id == 0)
             {
@@ -42,72 +46,62 @@ namespace AgileTech_API.Controllers
             }
 
             //var client = ClientStore.clientList.FirstOrDefault(c => c.Id == id);
-            var client = _db.Clients.FirstOrDefault(c => c.Id == id);
+            var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
             if (client == null)
             {
                 _logger.LogError("Error - not found client with the " + id + " id.");
                 return NotFound();
             }
-            return Ok(client);
+            return Ok(_mapper.Map<ClientDto>(client));
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<ClientDto> CreateClient([FromBody] ClientDto clientDto)
+        public async Task<ActionResult<ClientDto>> CreateClient([FromBody] ClientCreateDto createDto)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(clientDto);
+                return BadRequest(createDto);
             }
 
-            if (_db.Clients.FirstOrDefault(c => c.Email.ToLower() == clientDto.Email.ToLower()) != null)
+            if (await _db.Clients.FirstOrDefaultAsync(c => c.Email.ToLower() == createDto.Email.ToLower()) != null)
             {
-                ModelState.AddModelError("EmailExists", "The email " + clientDto.Email + " already exists.");
+                ModelState.AddModelError("EmailExists", "The email " + createDto.Email + " already exists.");
                 return BadRequest(ModelState);
             }
 
-            if (!_db.Clients.Any()) {
-                return BadRequest(clientDto);
+            if (!await _db.Clients.AnyAsync()) {
+                return BadRequest(createDto);
             }
 
-            if (clientDto == null)
+            if (createDto == null)
             {
-                return BadRequest(clientDto);
+                return BadRequest(createDto);
             }
 
-            if (clientDto.Id > 0)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            Client model = _mapper.Map<Client>(createDto);
 
-            Client model = new()
-            {
-                Name = clientDto.Name,
-                Email = clientDto.Email,
-                Created = DateTime.Now
-            };
+            await _db.Clients.AddAsync(model);
+            await _db.SaveChangesAsync();
 
-            _db.Clients.Add(model);
-            _db.SaveChanges();
-
-            return CreatedAtRoute("GetClientById", new { id = clientDto.Id }, clientDto);
+            return CreatedAtRoute("GetClientById", new { id = model.Id }, model);
         }
 
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult DeleteClient(int id) 
+        public async Task<IActionResult> DeleteClient(int id) 
         { 
             if (id == 0) 
             { 
                 return BadRequest();
             }
 
-            var client = _db.Clients.FirstOrDefault(c => c.Id == id);
+            var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
             if (client == null) 
             {
@@ -115,7 +109,7 @@ namespace AgileTech_API.Controllers
             }
 
             _db.Clients.Remove(client);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return NoContent();
 
@@ -126,23 +120,17 @@ namespace AgileTech_API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdateClient(int id, [FromBody] ClientDto clientDto) 
+        public async Task<IActionResult> UpdateClient(int id, [FromBody] ClientUpdateDto updateDto) 
         {
-            if (clientDto == null || id != clientDto.Id) 
+            if (updateDto == null || id != updateDto.Id) 
             {
                 return BadRequest();
             }
 
-            Client model = new()
-            {
-                Id = clientDto.Id,
-                Name = clientDto.Name,
-                Email = clientDto.Email,
-                Created = DateTime.Now
-            };
+            Client model = _mapper.Map<Client>(updateDto);
 
             _db.Clients.Update(model);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }
@@ -151,23 +139,19 @@ namespace AgileTech_API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult UpdatePartialClient(int id, JsonPatchDocument<ClientDto> patchDto)
+        public async Task<IActionResult> UpdatePartialClient(int id, JsonPatchDocument<ClientUpdateDto> patchDto)
         {
             if (patchDto == null || id == 0)
             {
                 return BadRequest();
             }
 
-            var client = _db.Clients.AsNoTracking().FirstOrDefault (c => c.Id == id);
+            var client = await _db.Clients.AsNoTracking().FirstOrDefaultAsync(c => c.Id == id);
 
             if (client == null) return NotFound();
 
-            ClientDto clientDto = new()
-            {
-                Id = client.Id,
-                Name = client.Name,
-                Email = client.Email
-            };
+            ClientUpdateDto clientDto = _mapper.Map<ClientUpdateDto>(client);
+
 
             patchDto.ApplyTo(clientDto, ModelState);
 
@@ -176,16 +160,11 @@ namespace AgileTech_API.Controllers
                 return BadRequest(ModelState);
             }
 
-            Client model = new()
-            {
-                Id = clientDto.Id,
-                Name = clientDto.Name,
-                Email = clientDto.Email,
-                Created = DateTime.Now
-            };
+            Client model = _mapper.Map<Client>(clientDto);
+
 
             _db.Clients.Update(model);
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
 
             return NoContent();
         }

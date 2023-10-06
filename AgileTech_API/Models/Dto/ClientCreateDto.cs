@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AgileTech_API.Models.Dto
 {
-    public class ClientDto
+    public class ClientCreateDto
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
@@ -15,5 +13,6 @@ namespace AgileTech_API.Models.Dto
         [EmailAddress]
         public string Email { get; set; }
 
-    }  
+        public DateTime Created { get; set; } = DateTime.Now;
+    }
 }
