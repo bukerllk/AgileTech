@@ -1,5 +1,7 @@
 using AgileTech_API;
 using AgileTech_API.Data;
+using AgileTech_API.Repository;
+using AgileTech_API.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +20,7 @@ builder.Services.AddDbContext<ApplicatioDbContext>(option =>
 
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
