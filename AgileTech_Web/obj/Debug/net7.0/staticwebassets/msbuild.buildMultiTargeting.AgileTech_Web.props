@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\AgileTech_Web.props" />
+</Project>

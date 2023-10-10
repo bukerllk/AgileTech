@@ -1,0 +1,11 @@
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\bin\Debug\net7.0\AgileTech_Utility.deps.json
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\bin\Debug\net7.0\AgileTech_Utility.dll
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\bin\Debug\net7.0\AgileTech_Utility.pdb
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\obj\Debug\net7.0\AgileTech_Utility.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\obj\Debug\net7.0\AgileTech_Utility.AssemblyInfoInputs.cache
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\obj\Debug\net7.0\AgileTech_Utility.AssemblyInfo.cs
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\obj\Debug\net7.0\AgileTech_Utility.csproj.CoreCompileInputs.cache
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\obj\Debug\net7.0\AgileTech_Utility.dll
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\obj\Debug\net7.0\refint\AgileTech_Utility.dll
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\obj\Debug\net7.0\AgileTech_Utility.pdb
+C:\Users\GEM\Documents\.NET\AgileTech\AgileTech_Utility\obj\Debug\net7.0\ref\AgileTech_Utility.dll

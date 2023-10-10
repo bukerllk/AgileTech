@@ -1,0 +1,143 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Web\\AgileTech_Web.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Utility\\AgileTech_Utility.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Utility\\AgileTech_Utility.csproj",
+        "projectName": "AgileTech_Utility",
+        "projectPath": "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Utility\\AgileTech_Utility.csproj",
+        "packagesPath": "C:\\Users\\GEM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Utility\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\GEM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Web\\AgileTech_Web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Web\\AgileTech_Web.csproj",
+        "projectName": "AgileTech_Web",
+        "projectPath": "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Web\\AgileTech_Web.csproj",
+        "packagesPath": "C:\\Users\\GEM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Web\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\GEM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Utility\\AgileTech_Utility.csproj": {
+                "projectPath": "C:\\Users\\GEM\\Documents\\.NET\\AgileTech\\AgileTech_Utility\\AgileTech_Utility.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
